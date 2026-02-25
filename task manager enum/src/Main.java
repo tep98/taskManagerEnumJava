@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 public class Main {
     public static void main(String[] args) {
         System.out.println("🚀 Демонстрация всех возможностей TaskManager\n");
@@ -7,25 +9,34 @@ public class Main {
         // === 1. ДОБАВЛЕНИЕ ЗАДАЧ И ПОДЗАДАЧ, СОРТИРОВКА ПО СТАТУСУ ===
         System.out.println("=== 1. Добавление задач и подзадач ===\n");
 
-        Task task1 = new Task("Купить молоко", "Сходить в магазин", Priority.MEDIUM);
+        Task task1 = new Task("Купить молоко", "Сходить в магазин", Priority.MEDIUM, 100);
         manager.addTask(task1);
 
-        SubTask sub1 = new SubTask("Выбрать марку", "Безлактозное по скидке", Priority.LOW, task1.getTaskId());
-        SubTask sub2 = new SubTask("Заплатить", "Наличными или картой?", Priority.HIGH, task1.getTaskId());
+        SubTask sub1 = new SubTask("Выбрать марку", "Безлактозное по скидке", Priority.LOW, task1.getTaskId(), 100);
+        SubTask sub2 = new SubTask("Заплатить", "Наличными или картой?", Priority.HIGH, task1.getTaskId(), 100);
         manager.addSubTask(sub1);
         manager.addSubTask(sub2);
 
-        Task task2 = new Task("Учить Java", "Продолжить изучение", Priority.HIGH);
+        Task task2 = new Task("Учить Java", "Продолжить изучение", Priority.HIGH, 100);
         task2.setStatus(Status.IN_PROGRESS); // Задача уже в работе
         manager.addTask(task2);
 
-        Task task3 = new Task("Протестировать код", "Проверить все функции", Priority.VERY_HIGH);
+        Task task3 = new Task("Протестировать код", "Проверить все функции", Priority.VERY_HIGH, 100);
         manager.addTask(task3);
 
         manager.printAllTasks();
         System.out.println();
 
-        // === 2. ЗАВЕРШЕНИЕ ПОДЗАДАЧ ===
+        Master master = new Master(1, "Мастер", 100);
+        Client client = new Client(1, "Клиент 1", 500, master);
+
+        client.addTask(task2, task2.getCost());
+        System.out.println(client.getTasks());
+        System.out.println(master.getTasks());
+        System.out.println(client.getMoney());
+        System.out.println(master.getMoneyCount());
+
+        /*// === 2. ЗАВЕРШЕНИЕ ПОДЗАДАЧ ===
         System.out.println("=== 2. Завершение подзадач (автообновление статуса родителя) ===\n");
         manager.completeSubTask(sub1.getTaskId()); // Завершаем первую подзадачу
         manager.completeSubTask(sub2.getTaskId()); // Завершаем вторую - задача станет DONE
@@ -79,6 +90,6 @@ public class Main {
         manager.addTask(demoProgress);
         manager.addTask(demoDone);
 
-        manager.printAllTasks();
+        manager.printAllTasks();*/
     }
 }

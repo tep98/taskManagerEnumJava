@@ -1,6 +1,6 @@
 import java.util.Objects;
 
-public class Task /*implements Comparable<Task>*/ {
+public class Task implements Points {
     private static int idCounter = 1;
     private final int taskId;
 
@@ -9,13 +9,20 @@ public class Task /*implements Comparable<Task>*/ {
     Priority priority;
     private boolean isCompleted = false;
     private Status status = Status.NEW;
+    int taskCost;
 
-    Task(String taskName, String taskDescription, Priority priority) {
+    Task(String taskName, String taskDescription, Priority priority, int taskCost) {
         this.taskId = idCounter++;
         this.taskName = taskName;
         this.taskDescription = taskDescription;
         this.priority = priority;
         this.status = Status.NEW;
+        this.taskCost = taskCost;
+    }
+
+    @Override
+    public int addPoints() {
+        return taskCost;
     }
 
     public int getTaskId() {
@@ -62,5 +69,9 @@ public class Task /*implements Comparable<Task>*/ {
 
     public void setCompleted(boolean completed) {
         isCompleted = completed;
+    }
+
+    public int getCost() {
+        return taskCost;
     }
 }
