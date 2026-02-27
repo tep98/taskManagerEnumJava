@@ -2,7 +2,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Utils {
+public class Utils extends UtilsAbstract {
 
     public static boolean areTasksUnique(Collection<? extends Task> tasks) {
         Set<Task> unique = new HashSet<>(tasks);
