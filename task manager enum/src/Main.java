@@ -12,19 +12,25 @@ public class Main {
         Task task1 = new Task("Купить молоко", "Сходить в магазин", Priority.MEDIUM, 100);
         manager.addTask(task1);
 
-        SubTask sub1 = new SubTask("Выбрать марку", "Безлактозное по скидке", Priority.LOW, task1.getTaskId(), 100);
-        SubTask sub2 = new SubTask("Заплатить", "Наличными или картой?", Priority.HIGH, task1.getTaskId(), 100);
+        SubTask sub1 = new SubTask("Выбрать марку", "Безлактозное по скидке", Priority.LOW, task1.getTaskId(), 50);
+        SubTask sub2 = new SubTask("Заплатить", "Наличными или картой?", Priority.HIGH, task1.getTaskId(), 50);
         manager.addSubTask(sub1);
         manager.addSubTask(sub2);
 
-        Task task2 = new Task("Учить Java", "Продолжить изучение", Priority.HIGH, 100);
+        Task task2 = new Task("Учить Java", "Продолжить изучение", Priority.HIGH, 300);
         task2.setStatus(Status.IN_PROGRESS); // Задача уже в работе
         manager.addTask(task2);
 
-        Task task3 = new Task("Протестировать код", "Проверить все функции", Priority.VERY_HIGH, 100);
+        Task task3 = new Task("Протестировать код", "Проверить все функции", Priority.VERY_HIGH, 150);
         manager.addTask(task3);
 
         manager.printAllTasks();
+
+        System.out.println("СОРТИРВАННЫЕ");
+
+        manager.sort();
+
+
         System.out.println();
 
         Master master = new Master(1, "Мастер", 100);

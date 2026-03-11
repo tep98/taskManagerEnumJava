@@ -1,6 +1,10 @@
 import java.util.HashMap;
 import java.util.Map;
 import java.util.*;
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 
 public class TaskManager {
@@ -20,11 +24,12 @@ public class TaskManager {
         System.out.println("Список задач:\n");
 
         List<Task> sortedTasks = new ArrayList<>(tasks.values());
-        sortedTasks.sort(new TaskStatusCompare());
+
 
 
         for (Task task : sortedTasks) {
             System.out.println(task);
+            System.out.println(task.taskCost);
 
             for (SubTask sub : subTasks.values()) {
                 if (sub.getParentTaskId() == task.getTaskId()) {
@@ -66,8 +71,30 @@ public class TaskManager {
     public Archive getArchive() {
         return archive;
     }
-}
 
+    public void sort() {
+        Map<Integer, Task> sortedTasks = tasks.entrySet().stream()
+                .filter(t -> t != null)
+                .sorted(Map.Entry.comparingByValue(Comparator.comparing(Task::getCost)))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1,e2) -> e1, LinkedHashMap::new ));
+        tasks.clear();
+        sortedTasks.forEach((id, task) -> tasks.put(id, task));
+
+        sortedTasks.forEach((id, task) -> {
+            System.out.println(task);
+            System.out.println(task.taskCost);
+
+            for (SubTask sub : subTasks.values()) {
+                if (sub.getParentTaskId() == task.getTaskId()) {
+                    System.out.println(sub);
+                }
+            }
+            System.out.println();
+        });
+    }
+
+
+}
 
 /*
 public class TaskManager {
